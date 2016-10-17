@@ -84,6 +84,81 @@
 <h2>Size of variables</h2>
 <div class="highlight"><pre><span></span><span class="n">Sometype</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
 </pre></div>
+
+
+<h2>Exception handling in C</h2>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;setjmp.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">first</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">second</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="cm">/* Use a file scoped static variable for the exception stack so we can access</span>
+<span class="cm"> * it anywhere within this translation unit. */</span>
+<span class="k">static</span> <span class="kt">jmp_buf</span> <span class="n">exception_env</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">exception_type</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span> <span class="k">volatile</span> <span class="n">mem_buffer</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">setjmp</span><span class="p">(</span><span class="n">exception_env</span><span class="p">))</span> <span class="p">{</span>
+        <span class="cm">/* if we get here there was an exception */</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;first failed, exception type: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="cm">/* Run code that may signal failure via longjmp. */</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">&quot;calling first&quot;</span><span class="p">);</span>
+        <span class="n">first</span><span class="p">();</span>
+
+        <span class="n">mem_buffer</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">300</span><span class="p">);</span> <span class="cm">/* allocate a resource */</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">strcpy</span><span class="p">(</span><span class="n">mem_buffer</span><span class="p">,</span> <span class="s">&quot;first succeeded&quot;</span><span class="p">));</span> <span class="cm">/* not reached */</span>
+    <span class="p">}</span>
+
+    <span class="n">free</span><span class="p">(</span><span class="n">mem_buffer</span><span class="p">);</span> <span class="cm">/* NULL can be passed to free, no operation is performed */</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">first</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">jmp_buf</span> <span class="n">my_env</span><span class="p">;</span>
+
+    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;entering first&quot;</span><span class="p">);</span> <span class="cm">/* reached */</span>
+
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">my_env</span><span class="p">,</span> <span class="n">exception_env</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">my_env</span><span class="p">);</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="n">setjmp</span><span class="p">(</span><span class="n">exception_env</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="cm">/* if we get here there was an exception. */</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">&quot;second failed, exception type: 3; remapping to type 1&quot;</span><span class="p">);</span>
+            <span class="n">exception_type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">default</span><span class="o">:</span> <span class="cm">/* fall through */</span>
+            <span class="n">memcpy</span><span class="p">(</span><span class="n">exception_env</span><span class="p">,</span> <span class="n">my_env</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">exception_env</span><span class="p">);</span> <span class="cm">/* restore exception stack */</span>
+            <span class="n">longjmp</span><span class="p">(</span><span class="n">exception_env</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">);</span> <span class="cm">/* continue handling the exception */</span>
+
+        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="cm">/* normal, desired operation */</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">&quot;calling second&quot;</span><span class="p">);</span> <span class="cm">/* reached */</span>
+            <span class="n">second</span><span class="p">();</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">&quot;second succeeded&quot;</span><span class="p">);</span> <span class="cm">/* not reached */</span>
+    <span class="p">}</span>
+
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">exception_env</span><span class="p">,</span> <span class="n">my_env</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">exception_env</span><span class="p">);</span> <span class="cm">/* restore exception stack */</span>
+
+    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;leaving first&quot;</span><span class="p">);</span> <span class="cm">/* never reached */</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">second</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;entering second&quot;</span> <span class="p">);</span> <span class="cm">/* reached */</span>
+
+    <span class="n">exception_type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">longjmp</span><span class="p">(</span><span class="n">exception_env</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">);</span> <span class="cm">/* declare that the program has failed */</span>
+
+    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;leaving second&quot;</span><span class="p">);</span> <span class="cm">/* not reached */</span>
+<span class="p">}</span>
+</pre></div>
     </div><!-- /.entry-content -->
 
   </article>
