@@ -24,11 +24,11 @@
                     <h1 class="entry-title"><a href="https://szsdk.github.io/my-super-post.html">C Idiom</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2016-10-17T07:34:39+08:00">
-                Published: 一 17 十月 2016
+                Published: Mon 17 October 2016
         </abbr>
 		<br />
         <abbr class="modified" title="2016-10-17T07:34:47+08:00">
-                Updated: 一 17 十月 2016
+                Updated: Mon 17 October 2016
         </abbr>
 
         <address class="vcard author">
@@ -36,17 +36,44 @@
         </address>
 <p>In <a href="https://szsdk.github.io/category/c.html">C</a>.</p>
 <p>tags: <a href="https://szsdk.github.io/tag/c.html">C</a> </p>
-</footer><!-- /.post-info --><p>This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.
-This is the content of my super blog post.</p>                </article>
+</footer><!-- /.post-info --><h2>offsetof</h2>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<span class="cp">#define offsetof(TYPE, MEMBER) ((size_t) &amp;((TYPE *)0)-&gt;MEMBER)</span>
+
+<span class="k">struct</span> <span class="n">abc</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">b</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">abc_inst</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">printf</span> <span class="p">(</span><span class="s">&quot;%lu %lu %lu</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">offsetof</span><span class="p">(</span><span class="k">struct</span> <span class="n">abc</span><span class="p">,</span> <span class="n">a</span><span class="p">),</span> 
+                        <span class="n">offsetof</span><span class="p">(</span><span class="k">struct</span> <span class="n">abc</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> 
+                        <span class="n">offsetof</span><span class="p">(</span><span class="k">struct</span> <span class="n">abc</span><span class="p">,</span> <span class="n">c</span><span class="p">));</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>This prints</p>
+<div class="highlight"><pre><span></span>0 4 20
+</pre></div>
+
+
+<h2>Array size macro</h2>
+<div class="highlight"><pre><span></span><span class="cp">#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))</span>
+
+<span class="c1">// Can be used like this:</span>
+<span class="kt">int</span> <span class="n">a</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="c1">// n = 4</span>
+
+<span class="c1">// Warning: does not work with array arguments to functions:</span>
+<span class="kt">int</span> <span class="nf">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">nb</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="c1">// Would not work!</span>
+<span class="p">}</span>
+</pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
