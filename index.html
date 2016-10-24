@@ -21,7 +21,70 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://szsdk.github.io/my-super-post.html">C Idiom</a></h1>
+                    <h1 class="entry-title"><a href="https://szsdk.github.io/instruction_pipeling.html">Instruction Pipeling</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-10-24T14:00:56+08:00">
+                Published: Mon 24 October 2016
+        </abbr>
+		<br />
+        <abbr class="modified" title="2016-10-24T14:01:38+08:00">
+                Updated: Mon 24 October 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://szsdk.github.io/author/sz.html">sz</a>
+        </address>
+<p>In <a href="https://szsdk.github.io/category/c.html">C</a>.</p>
+<p>tags: <a href="https://szsdk.github.io/tag/c.html">C</a> </p>
+</footer><!-- /.post-info --><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">clock_t</span> <span class="n">t</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">;</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">clock</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mf">1e5</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mf">2.0</span><span class="p">;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">clock</span><span class="p">()</span><span class="o">-</span><span class="n">t</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Time: %ld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+
+    <span class="n">t</span><span class="o">=</span><span class="n">clock</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mf">1e5</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mf">2.0</span><span class="p">;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">clock</span><span class="p">()</span><span class="o">-</span><span class="n">t</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Time: %ld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Output:</p>
+<div class="highlight"><pre><span></span><span class="n">Time</span><span class="o">:</span> <span class="mi">12783</span>
+<span class="mi">1</span> <span class="mi">0</span>
+<span class="n">Time</span><span class="o">:</span> <span class="mi">4377</span>
+<span class="mi">1</span> <span class="mi">0</span>
+</pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://szsdk.github.io/my-super-post.html" rel="bookmark"
+                           title="Permalink to C Idiom">C Idiom</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-10-17T07:34:39+08:00">
                 Published: Mon 17 October 2016
@@ -36,130 +99,12 @@
         </address>
 <p>In <a href="https://szsdk.github.io/category/c.html">C</a>.</p>
 <p>tags: <a href="https://szsdk.github.io/tag/c.html">C</a> </p>
-</footer><!-- /.post-info --><h2>offsetof</h2>
-<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<span class="cp">#define offsetof(TYPE, MEMBER) ((size_t) &amp;((TYPE *)0)-&gt;MEMBER)</span>
-
-<span class="k">struct</span> <span class="n">abc</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">b</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
-    <span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">abc_inst</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">printf</span> <span class="p">(</span><span class="s">&quot;%lu %lu %lu</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">offsetof</span><span class="p">(</span><span class="k">struct</span> <span class="n">abc</span><span class="p">,</span> <span class="n">a</span><span class="p">),</span> 
-                        <span class="n">offsetof</span><span class="p">(</span><span class="k">struct</span> <span class="n">abc</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> 
-                        <span class="n">offsetof</span><span class="p">(</span><span class="k">struct</span> <span class="n">abc</span><span class="p">,</span> <span class="n">c</span><span class="p">));</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>This prints</p>
-<div class="highlight"><pre><span></span>0 4 20
-</pre></div>
-
-
-<h2>Array size macro</h2>
-<div class="highlight"><pre><span></span><span class="cp">#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))</span>
-
-<span class="c1">// Can be used like this:</span>
-<span class="kt">int</span> <span class="n">a</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">};</span>
-<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="c1">// n = 4</span>
-
-<span class="c1">// Warning: does not work with array arguments to functions:</span>
-<span class="kt">int</span> <span class="nf">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">nb</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="c1">// Would not work!</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<h2>Size of variables</h2>
-<div class="highlight"><pre><span></span><span class="n">Sometype</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
-</pre></div>
-
-
-<h2>Exception handling in C</h2>
-<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;setjmp.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
-
-<span class="k">static</span> <span class="kt">void</span> <span class="nf">first</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
-<span class="k">static</span> <span class="kt">void</span> <span class="nf">second</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
-
-<span class="cm">/* Use a file scoped static variable for the exception stack so we can access</span>
-<span class="cm"> * it anywhere within this translation unit. */</span>
-<span class="k">static</span> <span class="kt">jmp_buf</span> <span class="n">exception_env</span><span class="p">;</span>
-<span class="k">static</span> <span class="kt">int</span> <span class="n">exception_type</span><span class="p">;</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">char</span> <span class="o">*</span> <span class="k">volatile</span> <span class="n">mem_buffer</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">setjmp</span><span class="p">(</span><span class="n">exception_env</span><span class="p">))</span> <span class="p">{</span>
-        <span class="cm">/* if we get here there was an exception */</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;first failed, exception type: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="cm">/* Run code that may signal failure via longjmp. */</span>
-        <span class="n">puts</span><span class="p">(</span><span class="s">&quot;calling first&quot;</span><span class="p">);</span>
-        <span class="n">first</span><span class="p">();</span>
-
-        <span class="n">mem_buffer</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">300</span><span class="p">);</span> <span class="cm">/* allocate a resource */</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">strcpy</span><span class="p">(</span><span class="n">mem_buffer</span><span class="p">,</span> <span class="s">&quot;first succeeded&quot;</span><span class="p">));</span> <span class="cm">/* not reached */</span>
-    <span class="p">}</span>
-
-    <span class="n">free</span><span class="p">(</span><span class="n">mem_buffer</span><span class="p">);</span> <span class="cm">/* NULL can be passed to free, no operation is performed */</span>
-
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">static</span> <span class="kt">void</span> <span class="nf">first</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">jmp_buf</span> <span class="n">my_env</span><span class="p">;</span>
-
-    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;entering first&quot;</span><span class="p">);</span> <span class="cm">/* reached */</span>
-
-    <span class="n">memcpy</span><span class="p">(</span><span class="n">my_env</span><span class="p">,</span> <span class="n">exception_env</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">my_env</span><span class="p">);</span>
-
-    <span class="k">switch</span> <span class="p">(</span><span class="n">setjmp</span><span class="p">(</span><span class="n">exception_env</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="cm">/* if we get here there was an exception. */</span>
-            <span class="n">puts</span><span class="p">(</span><span class="s">&quot;second failed, exception type: 3; remapping to type 1&quot;</span><span class="p">);</span>
-            <span class="n">exception_type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-
-        <span class="k">default</span><span class="o">:</span> <span class="cm">/* fall through */</span>
-            <span class="n">memcpy</span><span class="p">(</span><span class="n">exception_env</span><span class="p">,</span> <span class="n">my_env</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">exception_env</span><span class="p">);</span> <span class="cm">/* restore exception stack */</span>
-            <span class="n">longjmp</span><span class="p">(</span><span class="n">exception_env</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">);</span> <span class="cm">/* continue handling the exception */</span>
-
-        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="cm">/* normal, desired operation */</span>
-            <span class="n">puts</span><span class="p">(</span><span class="s">&quot;calling second&quot;</span><span class="p">);</span> <span class="cm">/* reached */</span>
-            <span class="n">second</span><span class="p">();</span>
-            <span class="n">puts</span><span class="p">(</span><span class="s">&quot;second succeeded&quot;</span><span class="p">);</span> <span class="cm">/* not reached */</span>
-    <span class="p">}</span>
-
-    <span class="n">memcpy</span><span class="p">(</span><span class="n">exception_env</span><span class="p">,</span> <span class="n">my_env</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">exception_env</span><span class="p">);</span> <span class="cm">/* restore exception stack */</span>
-
-    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;leaving first&quot;</span><span class="p">);</span> <span class="cm">/* never reached */</span>
-<span class="p">}</span>
-
-<span class="k">static</span> <span class="kt">void</span> <span class="nf">second</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;entering second&quot;</span> <span class="p">);</span> <span class="cm">/* reached */</span>
-
-    <span class="n">exception_type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-    <span class="n">longjmp</span><span class="p">(</span><span class="n">exception_env</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">);</span> <span class="cm">/* declare that the program has failed */</span>
-
-    <span class="n">puts</span><span class="p">(</span><span class="s">&quot;leaving second&quot;</span><span class="p">);</span> <span class="cm">/* not reached */</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<h2>Use of Conditional Operator</h2>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>&lt;++&gt;</p>
+                <a class="readmore" href="https://szsdk.github.io/my-super-post.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="social">
                         <h2>social</h2>
